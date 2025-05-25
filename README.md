@@ -1,5 +1,5 @@
 # IT대학 빈 강의실 관리
-<img width="1319" alt="image" src="https://github.com/user-attachments/assets/c23d5594-2720-4bfc-9d20-5e4b59e3d947" />
+<사진>
 
 ## 🚢 배포 주소
 ### Frontend
