@@ -12,10 +12,6 @@ https://gongsikdang.vercel.app/
 
 <img width="720" alt="스크린샷 2025-03-17 오후 4 33 50" src="https://github.com/user-attachments/assets/281731ce-9217-49fe-a217-ac345bf08316" />
 
-**Mobile**
-
-<img width="720" alt="image" src="https://github.com/user-attachments/assets/f0751f6e-929e-4bb9-b3d9-48d6ca37a7bd" />
-
 
 ### Backend
 https://gongsikdang-be-production.up.railway.app
