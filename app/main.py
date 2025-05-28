@@ -1,30 +1,36 @@
-### 파일: main.py
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.requests import Request
-from routes import auth
-import uvicorn
+from fastapi.responses import RedirectResponse
+from app.routes import auth, reservation
+from app.database import engine
+from app import models
+
+# 테이블 생성 (MySQL에 테이블 없으면 자동 생성됨)
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+# CORS 설정 (프론트 개발 시 로컬 연동 허용)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# 정적 파일, 템플릿 설정
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-@app.get("/")
-def root(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
-
+# 라우터 등록
 app.include_router(auth.router)
+app.include_router(reservation.router)
 
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+@app.get("/")
+def root():
+    return RedirectResponse(url="/login")
+
+# 서버 실행 명령어:
+# uvicorn app.main:app --reload
