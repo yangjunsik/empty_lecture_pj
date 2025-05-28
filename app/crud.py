@@ -1,20 +1,10 @@
 from sqlalchemy.orm import Session
-from app import models, schemas
+from app.models import User
 
-def get_user(db: Session, student_id: str, name: str, phone: str):
-    return db.query(models.User).filter_by(
-        student_id=student_id, name=name, phone=phone
+def get_user_for_login(db: Session, user_id: str, name: str, password: str):
+    return db.query(User).filter(
+        User.user_id == user_id,
+        User.name == name,
+        User.password == password
     ).first()
 
-def create_reservation(db: Session, user_id: int, data: schemas.ReservationCreate):
-    reservation = models.Reservation(
-        user_id=user_id,
-        room_id=data.room_id,
-        start_time=data.start_time,
-        end_time=data.end_time,
-        status="reserved"
-    )
-    db.add(reservation)
-    db.commit()
-    db.refresh(reservation)
-    return reservation
